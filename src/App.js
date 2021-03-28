@@ -1,47 +1,58 @@
-import Navbar from "./components/Navbar";
+import Profile from "./components/Profile";
 import Hero from "./components/Hero";
 import Members from "./components/Members";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { teamMembers } from "./memberlist";
-import { useState } from "react";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#1f1f1f",
-      light: "#292929",
-      dark: "#141414",
+      main: "#212121",
+      light: "#e8e8e8",
+      dark: "#1f1f1f",
     },
     secondary: {
-      main: "#9f9fed",
-      dark: "#6565E2",
-      light: "#BBBBF2",
-    },
-    action: {
-      hoverOpacity: "0.1",
+      main: "#D33F49",
+      dark: "#a9323a",
+      light: "#dc656d",
     },
   },
   typography: {
     h1: {
       fontFamily: "Montserrat",
       fontWeight: "600",
-      fontSize: "3rem",
+      fontSize: "5em",
+    },
+    body1: {
+      fontFamily: "Hind Madurai",
+      fontSize: "1.5em",
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1920,
     },
   },
 });
 
 function App() {
-  const [members, setMembers] = useState(teamMembers);
   return (
-    <>
+    <div className="app">
       <Router>
         <ThemeProvider theme={theme}>
-          <Route render={() => <Navbar></Navbar>} />
-          <Route render={() => <Hero></Hero>} />
-          <Route render={() => <Members members={members}></Members>} />
+          <Route path="/" exact render={() => <Hero />} />
+          <Route path="/" exact render={() => <Members />} />
+          <Route path="/" exact render={() => <Contact />} />
+          <Route path="/members/:name" render={() => <Profile />} />
+          <Footer></Footer>
         </ThemeProvider>
       </Router>
-    </>
+    </div>
   );
 }
 

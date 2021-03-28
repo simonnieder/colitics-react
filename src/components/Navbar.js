@@ -1,50 +1,109 @@
-import React from "react";
-import { makeStyles, Button } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { makeStyles, Grid } from "@material-ui/core";
+import { CgMenuRightAlt, CgClose } from "react-icons/cg";
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    justifyContent: "space-between",
+    position: "relative",
     alignItems: "center",
-    padding: "1.5rem",
-    background: "#d33f49",
+    padding: "0.75em",
+    color: "black",
+    [theme.breakpoints.up("xs")]: {
+      fontSize: ".7em",
+    },
+    [theme.breakpoints.up("sm")]: {
+      fontSize: ".8em",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1em",
+    },
+    boxShadow: "0px 10px 20px 5px rgba(0,0,0,0.2)",
+  },
+  heading: {
+    textDecoration: "none",
+    fontSize: "3em",
+    fontWeight: "600",
+    letterSpacing: "0.6px",
+  },
+  colitics: {
+    color: "#414141",
+    color: theme.palette.secondary.main,
+  },
+  team: {
+    color: "#414141",
+  },
+  icon: {
+    display: "none",
+  },
+  links: {
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  },
+  menu: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "#E9E9E9",
+    fontSize: "2em",
+    position: "absolute",
+    top: "0",
+    height: "100vh",
+    left: "0",
+    width: "100%",
+    "& > *": {
+      display: "block",
+      fontSize: "2.5em",
+    },
+    zIndex: "999",
   },
   link: {
     textDecoration: "none",
     color: "black",
-    fontSize: "1.5rem",
-    margin: "10px",
-  },
-  heading: {
-    textDecoration: "none",
-    color: "black",
-    fontSize: "2.5rem",
-    fontWeight: "600",
+    fontSize: "1.5em",
+    margin: "0 2em 0 0",
     fontFamily: "Montserrat",
-    letterSpacing: "3px",
+    cursor: "pointer",
   },
 }));
+
 const Navbar = () => {
   const classes = useStyles();
+  const [isActive, setActive] = useState(false);
   return (
-    <div className={classes.root}>
-      <div className={classes.flex}>
-        <Link className={classes.heading} to="/">
-          TEAM COLITICS
-        </Link>
-      </div>
-      <div className={classes.flex}>
-        <Link className={classes.link} to="/">
+    <Grid container className={classes.root}>
+      <Grid item sm={10} md={7}>
+        <a className={classes.heading} href="/">
+          <span className={classes.team}>TEAM</span> <span className={classes.colitics}>COLITICS</span>
+        </a>
+      </Grid>
+      <Grid item className={isActive ? classes.menu : classes.links}>
+        <a className={classes.link} href="/">
           HOME
-        </Link>
-        <Link className={classes.link} to="/">
+        </a>
+        <a className={classes.link} href="/#members">
           MEMBERS
-        </Link>
-        <Link className={classes.link} to="/">
+        </a>
+        <a className={classes.link} href="/#contact">
           CONTACT
-        </Link>
-      </div>
-    </div>
+        </a>
+      </Grid>
+      {isActive ? (
+        <CgClose
+          className={classes.icon}
+          onClick={() => {
+            setActive(!isActive);
+          }}
+        ></CgClose>
+      ) : (
+        <CgMenuRightAlt
+          className={classes.icon}
+          onClick={() => {
+            setActive(!isActive);
+          }}
+        ></CgMenuRightAlt>
+      )}
+    </Grid>
   );
 };
 
